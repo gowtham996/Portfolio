@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gowtham Vallate — AI, Machine Learning & Web Developer</title>
+    <meta name="description" content="Modern minimalistic portfolio showcasing creative web design and development projects" />
+    <meta name="author" content="Your Name" />
+    <meta name="keywords" content="portfolio, web design, frontend developer, ui/ux designer, creative coding" />
+
+    <meta property="og:title" content="Your Name — Designer & Developer" />
+    <meta property="og:description" content="Modern minimalistic portfolio showcasing creative web design and development projects" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+  </head>
+
+  <body>
+    <!-- Inline script to apply persisted theme/font before React mounts -->
+    <script>
+      (function() {
+        try {
+          var theme = localStorage.getItem('theme');
+          var font = localStorage.getItem('font');
+
+          if (theme === 'light') {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+          } else if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+          }
+
+          if (font === 'mono') {
+            document.body.classList.add('font-mono');
+          } else {
+            document.body.classList.remove('font-mono');
+          }
+        } catch (e) {
+          // fail silently
+        }
+      })();
+    </script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

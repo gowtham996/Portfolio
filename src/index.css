@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Portfolio Design System - Dark Minimalist Theme
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Dark portfolio theme */
+    --background: 0 0% 6%;
+    --foreground: 0 0% 98%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 6%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 85%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 0 0% 18%;
+    --accent-foreground: 0 0% 90%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 0 0% 40%;
+
+    /* Portfolio specific tokens */
+    --portfolio-bg: 0 0% 4%;
+    --portfolio-text-primary: 0 0% 98%;
+    --portfolio-text-secondary: 0 0% 70%;
+    --portfolio-text-muted: 0 0% 45%;
+    --portfolio-accent: 0 0% 20%;
+    --portfolio-hover: 0 0% 25%;
+
+    /* Typography */
+    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
+
+    --radius: 0.125rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .light {
+    /* Light theme overrides */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 6%;
+    --portfolio-bg: 0 0% 97%;
+    --portfolio-text-primary: 0 0% 8%;
+    --portfolio-text-secondary: 0 0% 30%;
+    --portfolio-text-muted: 0 0% 55%;
+    --portfolio-accent: 0 0% 90%;
+    --portfolio-hover: 0 0% 85%;
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Improve layout when using monospace font: slightly taller line-height and safer wrapping */
+  :root .font-mono body, .font-mono body {
+    line-height: 1.65;
+    /* allow long words to break instead of overflowing */
+    word-break: break-word;
+    white-space: normal;
+  }
+
+  /* Ensure navigation spacing remains comfortable in mono */
+  .font-mono nav ul.space-y-8 > li {
+    margin-top: 2rem; /* slightly larger gaps */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-portfolio-bg text-portfolio-text-primary font-sans;
+    background-image: url('/src/assets/noise-texture.jpg');
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    background-blend-mode: overlay;
+    background-attachment: fixed;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .portfolio-text-primary {
+    color: hsl(var(--portfolio-text-primary));
+  }
+  
+  .portfolio-text-secondary {
+    color: hsl(var(--portfolio-text-secondary));
+  }
+  
+  .portfolio-text-muted {
+    color: hsl(var(--portfolio-text-muted));
+  }
+
+  .portfolio-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .portfolio-hover:hover {
+    background-color: hsl(var(--portfolio-hover));
+  }
+
+  .portfolio-fade-in {
+    animation: portfolioFadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  .portfolio-slide-in {
+    animation: portfolioSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  @keyframes portfolioFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes portfolioSlideIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}
