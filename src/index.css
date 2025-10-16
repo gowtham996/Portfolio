@@ -49,6 +49,17 @@ All colors MUST be HSL.
     --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
 
+  /* Hover and scrollbar tokens */
+  /* General interactive text hover: in dark theme we brighten, in light theme we darken */
+  --text-hover-hsl: 0 0% 100%; /* default (dark theme) - brighter */
+  /* Explicit hover colors for primary text (H S L triple) */
+  --portfolio-text-primary-hover: 0 0% 100%; /* dark theme: brighter */
+
+  /* Scrollbar colors (rgba for cross-browser ease) */
+  --scrollbar-thumb: rgba(255,255,255,0.08);
+  --scrollbar-thumb-hover: rgba(255,255,255,0.16);
+  --scrollbar-track: transparent;
+
     --radius: 0.125rem;
 
     --sidebar-background: 0 0% 98%;
@@ -78,6 +89,8 @@ All colors MUST be HSL.
     --portfolio-text-muted: 0 0% 55%;
     --portfolio-accent: 0 0% 90%;
     --portfolio-hover: 0 0% 85%;
+    /* In light theme we want hovered primary text to be noticeably darker */
+    --portfolio-text-primary-hover: 0 0% 4%;
   }
 
   .font-mono {
@@ -95,6 +108,47 @@ All colors MUST be HSL.
   /* Ensure navigation spacing remains comfortable in mono */
   .font-mono nav ul.space-y-8 > li {
     margin-top: 2rem; /* slightly larger gaps */
+  }
+
+  /* Smooth color transitions for interactive text */
+  body, .portfolio-text-primary, .portfolio-text-secondary, .portfolio-text-muted, a, button {
+    transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+  }
+
+  /* Hover: use explicit hover color variables so the hover color has strong contrast */
+  body:not(.light) a:hover, body:not(.light) .portfolio-text-primary:hover,
+  body:not(.light) h1:hover, body:not(.light) h2:hover, body:not(.light) h3:hover {
+    color: hsl(var(--portfolio-text-primary-hover));
+  }
+
+  .light a:hover, .light .portfolio-text-primary:hover,
+  .light h1:hover, .light h2:hover, .light h3:hover {
+    color: hsl(var(--portfolio-text-primary-hover));
+  }
+
+  /* Thin cross-browser scrollbar styling */
+  /* WebKit (Chrome, Edge, Safari) */
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  *::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scrollbar-thumb-hover);
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
   }
 }
 
@@ -172,3 +226,118 @@ All colors MUST be HSL.
     }
   }
 }
+
+/* Gray theme variant */
+:root[data-theme='gray'] {
+  /* Base background and foreground using HSL tokens if your project uses them */
+  --portfolio-bg: 220 4% 14%;         /* ~#1e1e1e / soft neutral gray */
+  --portfolio-text-primary: 0 0% 94%; /* #f0f0f0 */
+  --portfolio-accent: 186 22% 55%;    /* desaturated teal/blue-gray */
+  --portfolio-text-muted: 0 0% 60%;
+  --portfolio-hover: 0 0% 20%;
+  --card: 220 4% 18%;                 /* slightly lighter card bg */
+  --transition-duration: 0.35s;
+}
+
+/* Sakura theme variant */
+:root[data-theme='sakura'] {
+  /* Sakura theme - official palette provided by user */
+  --portfolio-bg: linear-gradient(135deg, #fff5f7 0%, #fbe4e8 100%); /* soft petal wash */
+  --portfolio-bg-solid: #fff5f7;
+
+  --portfolio-text-primary: #2b2b2b;     /* deep charcoal for primary text */
+  --portfolio-text-secondary: #4b4b4b;   /* slightly lighter for secondary text */
+  --portfolio-heading: #3c2a2a;          /* muted maroon for headings */
+
+  --portfolio-accent: #d16b5e;           /* soft coral red / torii-inspired */
+  --portfolio-accent-hover: #f7b6b2;     /* warm pastel pink glow for hover/active */
+  --portfolio-nav-hover: #f2b5c4;        /* gentle pink highlight for nav hover */
+
+  --portfolio-card-bg: rgba(255,255,255,0.7); /* translucent paper-like surface */
+  --portfolio-border: rgba(0,0,0,0.05);        /* soft shadow / border color */
+  --portfolio-shadow: rgba(0,0,0,0.05);
+
+  --portfolio-button-bg: linear-gradient(90deg, #f9c5d1 0%, #f7b6b2 100%);
+  --portfolio-button-text: #3c2a2a;
+
+  --portfolio-divider: #e5d4d6;
+  --portfolio-selection: #ffdde1;
+  --portfolio-focus: #c87a7a;
+  --portfolio-minor: #eac9ce; /* scrollbar / minor accents */
+
+  --portfolio-transition: 0.4s;
+}
+
+/* Ensure theme transitions when using data-theme attribute */
+html[data-theme], body[data-theme], body, html {
+  transition: background-color var(--portfolio-transition, 0.4s) ease, color var(--portfolio-transition, 0.4s) ease;
+}
+
+/* Headings mapping for sakura */
+:root[data-theme='sakura'] h1,
+:root[data-theme='sakura'] h2,
+:root[data-theme='sakura'] h3 {
+  color: var(--portfolio-heading);
+}
+
+/* Links and accents */
+:root[data-theme='sakura'] a,
+:root[data-theme='sakura'] .accent {
+  color: var(--portfolio-accent);
+}
+:root[data-theme='sakura'] a:hover,
+:root[data-theme='sakura'] .accent:hover {
+  color: var(--portfolio-accent-hover);
+}
+
+/* Card background and subtle shadow */
+:root[data-theme='sakura'] .card,
+:root[data-theme='sakura'] .container {
+  background: var(--portfolio-card-bg);
+  border: 1px solid var(--portfolio-border);
+  box-shadow: 0 6px 18px var(--portfolio-shadow);
+}
+
+/* Buttons */
+:root[data-theme='sakura'] .btn,
+:root[data-theme='sakura'] button {
+  background: var(--portfolio-button-bg);
+  color: var(--portfolio-button-text);
+  border: 1px solid rgba(0,0,0,0.03);
+}
+
+/* Subtle hover glow */
+:root[data-theme='sakura'] a:hover,
+:root[data-theme='sakura'] .btn:hover {
+  box-shadow: 0 6px 18px rgba(209,107,94,0.12);
+}
+
+/* Scrollbar / minor accents (WebKit + Firefox) */
+:root[data-theme='sakura'] *::-webkit-scrollbar-thumb { background: var(--portfolio-minor); }
+:root[data-theme='sakura'] * { scrollbar-color: var(--portfolio-minor) transparent; }
+
+/* Sakura overrides: some project rules expect HSL variable values (e.g. hsl(var(--...))).
+   For sakura we use hex/gradient values, so override those component rules here. */
+:root[data-theme='sakura'] body {
+  /* use the gradient or solid bg provided by the sakura variables */
+  background: var(--portfolio-bg);
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  background-blend-mode: overlay;
+  background-attachment: fixed;
+}
+
+:root[data-theme='sakura'] .portfolio-text-primary { color: var(--portfolio-text-primary); }
+:root[data-theme='sakura'] .portfolio-text-secondary { color: var(--portfolio-text-secondary); }
+:root[data-theme='sakura'] .portfolio-text-muted { color: var(--portfolio-text-secondary); }
+
+:root[data-theme='sakura'] .portfolio-hover:hover { background-color: var(--portfolio-accent-hover); }
+
+
+/* Smooth transition helper */
+html, body, .portfolio-fade-in, .portfolio-slide-in, .portfolio-text-primary, a, button {
+  transition: color var(--transition-duration) ease, background-color var(--transition-duration) ease, border-color var(--transition-duration) ease;
+}
+
+/* Theme switching logic belongs in JS/TS (e.g. ThemeToggle.tsx). */
+/* Use the existing ThemeToggle component to handle cycling and localStorage. */

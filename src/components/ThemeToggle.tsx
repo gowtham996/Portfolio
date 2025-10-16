@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 
 export const ThemeToggle = () => {
   // Initialize from null; we'll read the real value on mount to avoid SSR mismatch
-  const [theme, setTheme] = useState<'dark' | 'light' | null>(null);
+  const [theme, setTheme] = useState<'dark' | 'light' | 'sakura' | null>(null);
   const [fontMode, setFontMode] = useState<'sans' | 'mono' | null>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -13,24 +13,21 @@ export const ThemeToggle = () => {
     setMounted(true);
 
     try {
-      // Prefer localStorage value, fallback to document classes (set by inline script)
-      const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | null;
+      // Prefer localStorage value, fallback to data-theme attribute (set by inline script)
+      const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | 'sakura' | null;
       const savedFont = localStorage.getItem('font') as 'sans' | 'mono' | null;
 
-      const initialTheme = savedTheme ?? (document.documentElement.classList.contains('light') ? 'light' : 'dark');
+      const initialTheme = savedTheme ?? (document.documentElement.getAttribute('data-theme') as ('dark'|'light'|'sakura')) ?? 'dark';
       const initialFont = savedFont ?? (document.body.classList.contains('font-mono') ? 'mono' : 'sans');
 
       setTheme(initialTheme);
       setFontMode(initialFont);
 
-      // Ensure document classes match initial values
-      if (initialTheme === 'light') {
-        document.documentElement.classList.add('light');
-        document.documentElement.classList.remove('dark');
-      } else {
-        document.documentElement.classList.add('dark');
-        document.documentElement.classList.remove('light');
-      }
+      // Ensure data-theme attribute matches initial value
+    document.documentElement.setAttribute('data-theme', initialTheme);
+    // set classes for backward compatibility
+    document.documentElement.classList.remove('light','dark','sakura','gray');
+    document.documentElement.classList.add(initialTheme);
 
       if (initialFont === 'mono') {
         document.body.classList.add('font-mono');
@@ -41,27 +38,25 @@ export const ThemeToggle = () => {
       // ignore storage errors
       setTheme('dark');
       setFontMode('sans');
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
+      document.documentElement.setAttribute('data-theme', 'dark');
     }
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    // cycle: light -> dark -> sakura -> light ...
+    const themes: Array<'light' | 'dark' | 'sakura'> = ['light', 'dark', 'sakura'];
+    const idx = themes.indexOf(theme ?? 'dark');
+    const newTheme = themes[(idx + 1) % themes.length];
     setTheme(newTheme);
     try {
       localStorage.setItem('theme', newTheme);
     } catch (e) {
       // ignore
     }
-
-    if (newTheme === 'light') {
-      document.documentElement.classList.add('light');
-      document.documentElement.classList.remove('dark');
-    } else {
-      document.documentElement.classList.add('dark');
-      document.documentElement.classList.remove('light');
-    }
+  document.documentElement.setAttribute('data-theme', newTheme);
+  // update classes for backward compatibility
+  document.documentElement.classList.remove('light','dark','sakura','gray');
+  document.documentElement.classList.add(newTheme);
   };
 
   const toggleFont = () => {
@@ -94,10 +89,12 @@ export const ThemeToggle = () => {
           }`}
           aria-label="Toggle theme"
         >
-          {theme === 'dark' ? (
-            <Sun className="w-4 h-4" />
+          {theme === 'light' ? (
+            <span className="text-base">☀️</span>
+          ) : theme === 'dark' ? (
+            <span className="text-base">🌙</span>
           ) : (
-            <Moon className="w-4 h-4" />
+            <span className="text-base">🌸</span>
           )}
         </Button>
         
