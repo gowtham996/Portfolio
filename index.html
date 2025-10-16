@@ -26,13 +26,15 @@
           var theme = localStorage.getItem('theme');
           var font = localStorage.getItem('font');
 
-          if (theme === 'light') {
-            document.documentElement.classList.add('light');
-            document.documentElement.classList.remove('dark');
-          } else if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-            document.documentElement.classList.remove('light');
-          }
+          // default to dark if nothing saved
+          var applied = theme || document.documentElement.getAttribute('data-theme') || 'dark';
+          document.documentElement.setAttribute('data-theme', applied);
+          // also set theme classes for backward compatibility with existing CSS
+          document.documentElement.classList.remove('light','dark','sakura','gray');
+          if (applied === 'light') document.documentElement.classList.add('light');
+          if (applied === 'dark') document.documentElement.classList.add('dark');
+          if (applied === 'sakura') document.documentElement.classList.add('sakura');
+          if (applied === 'gray') document.documentElement.classList.add('gray');
 
           if (font === 'mono') {
             document.body.classList.add('font-mono');
