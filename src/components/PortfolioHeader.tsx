@@ -10,7 +10,7 @@ export const PortfolioHeader = () => {
   if (!mounted) return null;
 
   return (
-    <header className="fixed left-12 top-12 z-30">
+    <header className="fixed left-12 top-12 z-30 md:left-12 md:top-12 left-1/2 transform md:translate-x-0 -translate-x-1/2">
       <div className="portfolio-fade-in">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-light text-portfolio-text-primary tracking-tight leading-none">
           Gowtham 
