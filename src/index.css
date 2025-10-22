@@ -316,6 +316,154 @@ html[data-theme], body[data-theme], body, html {
 :root[data-theme='sakura'] *::-webkit-scrollbar-thumb { background: var(--portfolio-minor); }
 :root[data-theme='sakura'] * { scrollbar-color: var(--portfolio-minor) transparent; }
 
+/* Blue Lock theme - Neon BlueLock (refined) */
+:root[data-theme='blueLock'] {
+  /* Core color tokens (keeps variable names consistent with other themes) */
+  --color-bg: #040510;
+  --color-surface: #0A1020;
+  --color-primary: #009DFF;
+  --color-secondary: #00E0FF;
+  --color-accent: #1E90FF;
+  --color-text-primary: #E8F4FF;
+  --color-text-secondary: #8AB8FF;
+  --color-border: rgba(0,157,255,0.4);
+  --color-highlight: linear-gradient(90deg,#00E0FF,#0077FF);
+  --color-error: #FF007A;
+
+  /* Map to existing portfolio tokens for easy theme switching */
+  --portfolio-bg: radial-gradient(ellipse at center, #040510 0%, #05051a 45%, #0a0a12 100%);
+  --portfolio-bg-solid: var(--color-bg);
+
+  --portfolio-card-bg: var(--color-surface);
+  --portfolio-text-primary: var(--color-text-primary);
+  --portfolio-text-secondary: var(--color-text-secondary);
+  --portfolio-heading: #BFE9FF;
+
+  --portfolio-accent: var(--color-primary);
+  --portfolio-accent-2: var(--color-secondary);
+  --portfolio-highlight: var(--color-accent);
+  --portfolio-border: var(--color-border);
+
+  --portfolio-button-bg: var(--color-highlight);
+  --portfolio-button-text: var(--color-text-primary);
+
+  /* Glow & shadow tokens */
+  --portfolio-glow: 0 0 15px rgba(0,157,255,0.6);
+  --portfolio-shadow: 0 10px 30px rgba(0,20,40,0.6), 0 2px 6px rgba(0,0,0,0.6) inset;
+
+  --portfolio-minor: rgba(138,184,255,0.12);
+  --portfolio-transition: 0.4s;
+
+  /* Typography hint for this theme only (futuristic, bold) */
+  --font-sans: "Orbitron", "Poppins", "Exo 2", "Inter", system-ui, sans-serif;
+}
+
+/* Body + base mappings */
+:root[data-theme='blueLock'] body {
+  background: var(--portfolio-bg);
+  background-attachment: fixed;
+  color: var(--portfolio-text-primary);
+  font-family: var(--font-sans);
+}
+
+:root[data-theme='blueLock'] .portfolio-text-primary { color: var(--portfolio-text-primary); }
+:root[data-theme='blueLock'] .portfolio-text-secondary { color: var(--portfolio-text-secondary); }
+:root[data-theme='blueLock'] .portfolio-text-muted { color: color-mix(in srgb, var(--portfolio-text-secondary) 60%, black 40%); }
+
+/* Interactive hover background + glow */
+:root[data-theme='blueLock'] .portfolio-hover:hover {
+  background-color: rgba(0,157,255,0.06);
+  box-shadow: var(--portfolio-glow);
+  transition: box-shadow var(--portfolio-transition), transform 0.25s ease;
+}
+
+/* Neon Card / Container styling */
+:root[data-theme='blueLock'] .card,
+:root[data-theme='blueLock'] .container {
+  background: var(--portfolio-card-bg);
+  border: 1px solid var(--portfolio-border);
+  box-shadow: var(--portfolio-shadow);
+  transition: box-shadow var(--portfolio-transition), transform 0.3s ease;
+}
+
+/* Neon button styling (sample) */
+:root[data-theme='blueLock'] .btn,
+:root[data-theme='blueLock'] button {
+  background: var(--portfolio-button-bg);
+  background-size: 200% 100%;
+  color: var(--portfolio-button-text);
+  border: 1px solid rgba(0,157,255,0.18);
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  box-shadow: var(--portfolio-glow);
+  transition: transform 0.28s cubic-bezier(.2,.8,.2,1), box-shadow var(--portfolio-transition), background-position var(--portfolio-transition);
+}
+
+:root[data-theme='blueLock'] .btn:hover,
+:root[data-theme='blueLock'] button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 28px rgba(0,157,255,0.72), 0 6px 30px rgba(0,17,34,0.6);
+  background-position: 100% 0;
+}
+
+/* Accent outline for focus / active states */
+:root[data-theme='blueLock'] .btn:focus,
+:root[data-theme='blueLock'] button:focus,
+:root[data-theme='blueLock'] .focus-visible {
+  outline: 2px solid rgba(0,157,255,0.18);
+  outline-offset: 2px;
+  box-shadow: 0 0 22px rgba(0,157,255,0.36);
+}
+
+/* Sample Neon Card variant */
+:root[data-theme='blueLock'] .card--neon {
+  position: relative;
+  overflow: hidden;
+  padding: 1.25rem;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(10,16,32,0.6), rgba(6,10,20,0.85));
+  border: 1px solid rgba(0,157,255,0.14);
+}
+
+:root[data-theme='blueLock'] .card--neon::after {
+  content: "";
+  position: absolute;
+  left: -40%;
+  top: -10%;
+  width: 180%;
+  height: 220%;
+  background: var(--color-highlight);
+  opacity: 0.06;
+  transform: rotate(-18deg);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+/* small animated pulse on important actions */
+@keyframes blueLockPulse {
+  0% { box-shadow: 0 0 6px rgba(0,157,255,0.30); }
+  50% { box-shadow: 0 0 26px rgba(0,157,255,0.6); }
+  100% { box-shadow: 0 0 6px rgba(0,157,255,0.30); }
+}
+
+:root[data-theme='blueLock'] .pulse {
+  animation: blueLockPulse 1.6s ease-in-out infinite;
+}
+
+/* Scrollbar / minor accents */
+:root[data-theme='blueLock'] *::-webkit-scrollbar-thumb { background: rgba(138,184,255,0.12); }
+:root[data-theme='blueLock'] * { scrollbar-color: rgba(138,184,255,0.12) transparent; }
+
+/* Responsive helpers */
+@media (max-width: 768px) {
+  /* collapse vertical nav into a compact horizontal list */
+  nav ul { display: flex; gap: 0.75rem; align-items: center; }
+  nav ul li { margin: 0; }
+  nav { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); z-index: 40; }
+
+  header.fixed { left: 50% !important; transform: translateX(-50%) !important; top: 8px !important; }
+}
+
 /* Sakura overrides: some project rules expect HSL variable values (e.g. hsl(var(--...))).
    For sakura we use hex/gradient values, so override those component rules here. */
 :root[data-theme='sakura'] body {

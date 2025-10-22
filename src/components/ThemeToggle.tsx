@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 
 export const ThemeToggle = () => {
   // Initialize from null; we'll read the real value on mount to avoid SSR mismatch
-  const [theme, setTheme] = useState<'dark' | 'light' | 'sakura' | null>(null);
+  const [theme, setTheme] = useState<'dark' | 'light' | 'sakura' | 'blueLock' | null>(null);
   const [fontMode, setFontMode] = useState<'sans' | 'mono' | null>(null);
   const [mounted, setMounted] = useState(false);
 
@@ -14,10 +14,10 @@ export const ThemeToggle = () => {
 
     try {
       // Prefer localStorage value, fallback to data-theme attribute (set by inline script)
-      const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | 'sakura' | null;
+  const savedTheme = localStorage.getItem('theme') as 'dark' | 'light' | 'sakura' | 'blueLock' | null;
       const savedFont = localStorage.getItem('font') as 'sans' | 'mono' | null;
 
-      const initialTheme = savedTheme ?? (document.documentElement.getAttribute('data-theme') as ('dark'|'light'|'sakura')) ?? 'dark';
+  const initialTheme = savedTheme ?? (document.documentElement.getAttribute('data-theme') as ('dark'|'light'|'sakura'|'blueLock')) ?? 'dark';
       const initialFont = savedFont ?? (document.body.classList.contains('font-mono') ? 'mono' : 'sans');
 
       setTheme(initialTheme);
@@ -43,8 +43,8 @@ export const ThemeToggle = () => {
   }, []);
 
   const toggleTheme = () => {
-    // cycle: light -> dark -> sakura -> light ...
-    const themes: Array<'light' | 'dark' | 'sakura'> = ['light', 'dark', 'sakura'];
+  // cycle: light -> dark -> sakura -> blueLock -> light ...
+  const themes: Array<'light' | 'dark' | 'sakura' | 'blueLock'> = ['light', 'dark', 'sakura', 'blueLock'];
     const idx = themes.indexOf(theme ?? 'dark');
     const newTheme = themes[(idx + 1) % themes.length];
     setTheme(newTheme);
@@ -78,7 +78,7 @@ export const ThemeToggle = () => {
   if (!mounted || theme === null || fontMode === null) return null;
 
   return (
-    <div className="fixed left-4 bottom-4 z-50">
+    <div className="fixed left-4 bottom-4 z-50 md:left-4 md:bottom-4 left-1/2 transform -translate-x-1/2 md:transform-none">
       <div className="flex flex-row space-x-4 p-2 bg-portfolio-accent/20 backdrop-blur-sm rounded-lg border border-portfolio-accent/30">
         <Button
           variant="ghost"
@@ -93,8 +93,10 @@ export const ThemeToggle = () => {
             <span className="text-base">☀️</span>
           ) : theme === 'dark' ? (
             <span className="text-base">🌙</span>
-          ) : (
+          ) : theme === 'sakura' ? (
             <span className="text-base">🌸</span>
+          ) : (
+            <span className="text-base">⚽</span>
           )}
         </Button>
         

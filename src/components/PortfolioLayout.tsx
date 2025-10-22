@@ -28,7 +28,7 @@ export const PortfolioLayout = ({ children, showProjects = true }: PortfolioLayo
       {showProjects && <ProjectShowcase />}
       
       {/* Main content - add top padding so fixed header doesn't overlap content */}
-      <main className="relative z-20 pt-20 md:pt-24 lg:pt-28">
+      <main className="relative z-20 pt-20 md:pt-24 lg:pt-28 md:pl-32 lg:pl-40">
         {children}
       </main>
       
