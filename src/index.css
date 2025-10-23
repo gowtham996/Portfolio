@@ -98,7 +98,8 @@ All colors MUST be HSL.
   }
 
   /* Improve layout when using monospace font: slightly taller line-height and safer wrapping */
-  :root .font-mono body, .font-mono body {
+  /* Apply when body has class 'font-mono' or any element uses .font-mono */
+  body.font-mono, .font-mono {
     line-height: 1.65;
     /* allow long words to break instead of overflowing */
     word-break: break-word;
@@ -363,7 +364,8 @@ html[data-theme], body[data-theme], body, html {
   background: var(--portfolio-bg);
   background-attachment: fixed;
   color: var(--portfolio-text-primary);
-  font-family: var(--font-sans);
+  /* Avoid setting font-family here so the global font toggle (body.font-mono) can win.
+     The theme only changes the --font-sans variable. */
 }
 
 :root[data-theme='blueLock'] .portfolio-text-primary { color: var(--portfolio-text-primary); }
